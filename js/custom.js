@@ -1,6 +1,73 @@
-function masum(id){
-    console.log(id);
+const displayAiDetails = data=>{
+    const { id,description,features,image_link,integrations,input_output_examples,pricing } = data;
+    console.log(data);
+    // document.getElementById('description-id').innerText=data.data.description;
+    document.getElementById('modal-container').innerHTML=`
+        <div class="w-100 bg-danger-subtle border-danger p-4">
+            <div>
+                <p id="description-id">${description}</p>
+            </div>
+            <div class="d-flex justify-content-between g-4 mt-3">
+                <div class="card p-2">
+                    <div>
+                      <p">${pricing[0].price+' '+ pricing[0].plan}</p>
+                    </div>
+                </div>
+                <div class="card p-2">
+                    <div>
+                    <p">${pricing[1].price+' '+ pricing[1].plan}</p>
+                    </div>
+                </div>
+                <div class="card p-2">
+                    <div>
+                    <p">${pricing[2].price+' '+ pricing[2].plan}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <div>
+                    <h3>Features</h3>
+                    <ul>
+                        <li>${features[1].feature_name}</li>
+                        <li>${features[2].feature_name}</li>
+                        <li>${features[3].feature_name}</li>
+                        
+                    </ul>
+                </div>
+                <div>
+                    <h3>Integrations</h3>
+                    <ul>
+                        <li>${integrations[0]}</li>
+                        <li>${integrations[1]}</li>
+                        <li>${integrations[2]}</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        <div class="w-100 p-4">
+            <div><img class="img-fluid" src="${image_link[0]}" id="image-id" alt=""></div>
+            <h5 class="text-center">${input_output_examples[0].input}</h5>
+            <p class="text-center">${input_output_examples[0].output}</p>
+        </div>
+    
+    `
 }
+
+/*........................................*/
+const loadAiDetails = async id =>{
+    const URL=`https://openapi.programming-hero.com/api/ai/tool/${id}`
+    const res = await fetch(URL);
+    const data= await res.json();
+    displayAiDetails(data.data);
+    
+}
+
+
+
+
+
+/*......display 6 data.....*/
 const URL ="https://openapi.programming-hero.com/api/ai/tools";
 fetch(URL)
 .then(res=>res.json())
@@ -10,7 +77,7 @@ const displayData = data=>{
    const cardContainer = document.getElementById('card-conatiner');
     data.slice(0,6).forEach(element => {
         const { id, name, description, image,features,published_in } = element;
-        console.log(element);
+        // console.log(element);
         const div= document.createElement('div');
         div.classList.add('col');
         div.innerHTML=`<div class="card h-100">
@@ -28,7 +95,7 @@ const displayData = data=>{
         <small class="text-muted"><i class="fa-regular fa-calendar-days m-3"></i>${published_in}</small>
         </div>
         <div>
-        <button class="btn btn-danger me-4 mt-4" onclick="masum('${id}')"><i class="fa-solid fa-circle-arrow-right w-50"></i></button>
+        <button class="btn btn-danger me-4 mt-4" data-bs-toggle="modal" data-bs-target="#aiModal" onclick="loadAiDetails('${id}')"><i class="fa-solid fa-circle-arrow-right w-50"></i></button>
         </div>
         </div>
         
@@ -42,7 +109,7 @@ const displayData = data=>{
             // const li= document.createElement('li');
             // li.innerHTML=`${feature?feature:'mm'}`;
             // listContainer.appendChild(li);
-            console.log(feature)
+            // console.log(feature)
             listContainer+=`<li>${feature}</li>`;
         })
         
