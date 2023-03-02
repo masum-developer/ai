@@ -1,5 +1,5 @@
 const displayAiDetails = data=>{
-    const { id,description,features,image_link,integrations,input_output_examples,pricing } = data;
+    const { id,description,features,image_link,integrations,input_output_examples,pricing,accuracy } = data;
     console.log(data);
     // document.getElementById('description-id').innerText=data.data.description;
     document.getElementById('modal-container').innerHTML=`
@@ -46,7 +46,10 @@ const displayAiDetails = data=>{
             
         </div>
         <div class="w-100 p-4">
-            <div><img class="img-fluid" src="${image_link[0]}" id="image-id" alt=""></div>
+            <div>
+            <img class="img-fluid rounded-3 position-relative" src="${image_link[0]}" id="image-id" alt="">
+            <span class="badge text-bg-danger position-absolute top-0 end-0 mt-5 me-5">${accuracy.score?accuracy.score*100:''}% accuracy</span>
+            </div>
             <h5 class="text-center">${input_output_examples[0].input}</h5>
             <p class="text-center">${input_output_examples[0].output}</p>
         </div>
@@ -95,7 +98,7 @@ const displayData = data=>{
         <small class="text-muted"><i class="fa-regular fa-calendar-days m-3"></i>${published_in}</small>
         </div>
         <div>
-        <button class="btn btn-danger me-4 mt-4" data-bs-toggle="modal" data-bs-target="#aiModal" onclick="loadAiDetails('${id}')"><i class="fa-solid fa-circle-arrow-right w-50"></i></button>
+        <a class="text-danger me-4 mt-5" data-bs-toggle="modal" data-bs-target="#aiModal" onclick="loadAiDetails('${id}')"><i class="fa-solid fa-circle-arrow-right"></i></a>
         </div>
         </div>
         
