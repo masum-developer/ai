@@ -109,6 +109,8 @@ const loadAiData =async ()=>{
 
 
 const displayData = (data,dataLimit)=>{
+    b=[];
+   
    const cardContainer = document.getElementById('card-container');
    cardContainer.textContent='';
    let sliceData=data;
@@ -140,14 +142,11 @@ function dateSort(text,idNumber){
 
 dateSort(published_in,id);
 
-
-         
 /*.......................date format end........................*/
 let div= document.createElement('div');
 
 showData(id, name, image,features,published_in ,div);
-        cardContainer.appendChild(div);
-        
+        cardContainer.appendChild(div);   
         
     });
  document.getElementById('loader').classList.add('d-none');
@@ -180,8 +179,5 @@ document.getElementById('sort-date-id').addEventListener('click',function(){
    
         cardContainer.appendChild(div);
     });
-    
-   
-
    /*...............................*/
 })
