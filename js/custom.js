@@ -1,4 +1,34 @@
 let b=[];
+const showData= (id, name, image,features,published_in,div )=>{
+    div.classList.add('col');
+let l='';
+const items=features.map(p=>{
+    l+= '<li>'+p+'</li>';
+});
+div.innerHTML+=`<div class="card h-50">
+<img src="${image}" class="card-img-top img-fluid h-100 rounded-start" alt="...">
+<div class="card-body">
+  <h5 class="card-title">Features</h5>
+  <ol id="list-container">`
+  div.innerHTML+=l;
+  div.innerHTML+=`
+  </ol>
+</div>
+<hr class="w-100 text-center">
+<div class="d-flex justify-content-between">
+<div>
+<h2 class="m-3">${name}</h2>
+<small class="text-muted"><i class="fa-regular fa-calendar-days m-3"></i>${published_in}</small>
+</div>
+<div>
+<a class="text-danger me-4 mt-5" data-bs-toggle="modal" data-bs-target="#aiModal" onclick="loadAiDetails('${id}')"><i class="fa-solid fa-circle-arrow-right"></i></a>
+</div>
+</div>
+</div>
+</div>
+`
+}
+/*  Display Ai details* */
 const displayAiDetails = data=>{
     const { id,description,features,image_link,integrations,input_output_examples,pricing,accuracy } = data;
     //console.log(data);
@@ -79,7 +109,7 @@ const loadAiData =async ()=>{
 
 
 const displayData = (data,dataLimit)=>{
-   const cardContainer = document.getElementById('card-conatiner');
+   const cardContainer = document.getElementById('card-container');
    cardContainer.textContent='';
    let sliceData=data;
    if(dataLimit===6){
@@ -89,9 +119,10 @@ const displayData = (data,dataLimit)=>{
 }
 //    let sliceData=data.slice(0,6);
    sliceData.forEach(element => {
-        const { id, name, description, image,features,published_in } = element;
-        console.log(published_in);
-/*.......................sort start........................*/
+        const { id, name, image,features,published_in } = element;
+        //console.log(published_in);
+        
+/*.......................date format start........................*/
 
 
 function dateSort(text,idNumber){
@@ -100,62 +131,21 @@ function dateSort(text,idNumber){
   const a1={};
   a1.id=idNumber;
   a1.date=newDate;
+  a1.image=image;
+  a1.features=features;
+  a1.published_in=published_in;
+  a1.name=name;
   b.push(a1);
 }
 
 dateSort(published_in,id);
 
-const my = b.map(obj => {
-    return {...obj, date: new Date(obj.date)};
-  });
- // console.log(my);
- const sortedDesc = my.sort(
-(objA, objB) => Number(objB.date) - Number(objA.date),
-  );
-//console.log(sortedDesc);
+
          
-/*.......................sort end........................*/
-        let div= document.createElement('div');
-        div.classList.add('col');
-        let l='';
-        const items=features.map(p=>{
-          // console.log(p);
-            l+= '<li>'+p+'</li>';
-          // console.log(l);
-         // console.log('masum');
-    
-        }
-            
-            );
-            
-        
-        div.innerHTML+=`<div class="card h-50">
-        <img src="${image}" class="card-img-top img-fluid h-100 rounded-start" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Features</h5>
-          <ol id="list-container">`
+/*.......................date format end........................*/
+let div= document.createElement('div');
 
-          div.innerHTML+=l;
-            
-
-          div.innerHTML+=`
-          </ol>
-        </div>
-        <hr class="w-100 text-center">
-        <div class="d-flex justify-content-between">
-        <div>
-        <h2 class="m-3">${name}</h2>
-        <small class="text-muted"><i class="fa-regular fa-calendar-days m-3"></i>${published_in}</small>
-        </div>
-        <div>
-        <a class="text-danger me-4 mt-5" data-bs-toggle="modal" data-bs-target="#aiModal" onclick="loadAiDetails('${id}')"><i class="fa-solid fa-circle-arrow-right"></i></a>
-        </div>
-        </div>
-        
-        
-        </div>
-      </div>
-        `
+showData(id, name, image,features,published_in ,div);
         cardContainer.appendChild(div);
         
         
@@ -170,3 +160,28 @@ document.getElementById('show-all').addEventListener('click',function(){
 })   
 loadAiData();
 console.log(b);
+document.getElementById('sort-date-id').addEventListener('click',function(){
+    const my = b.map(obj => {
+        return {...obj, date: new Date(obj.date)};
+      });
+     // console.log(my);
+     const sortedDesc = my.sort(
+    (objA, objB) => Number(objB.date) - Number(objA.date),
+      );
+    console.log(sortedDesc);
+    const cardContainer = document.getElementById('card-container');
+   cardContainer.textContent='';
+    sortedDesc.forEach(element=>{
+        const { id, name, image,features,published_in } = element;
+        
+   /*...............................*/
+   let div= document.createElement('div');
+   showData(id, name, image,features,published_in,div );
+   
+        cardContainer.appendChild(div);
+    });
+    
+   
+
+   /*...............................*/
+})
