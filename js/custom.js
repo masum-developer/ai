@@ -1,6 +1,6 @@
 const displayAiDetails = data=>{
     const { id,description,features,image_link,integrations,input_output_examples,pricing,accuracy } = data;
-    console.log(data);
+    //console.log(data);
     // document.getElementById('description-id').innerText=data.data.description;
     document.getElementById('modal-container').innerHTML=`
         <div class="w-100 bg-danger-subtle border-danger p-4">
@@ -63,21 +63,7 @@ const loadAiDetails = async id =>{
     displayAiDetails(data.data);
 }
 
-const listDisplay = data =>{
-    
-    const ol= document.getElementById('list-container');
-    //console.log(data);
-   data.forEach(item=>{
 
-    // ol.innerHTML=`<li></li>`;
-    //  const li =document.createElement('li');
-    //  li.innerText=`${item?item:''}`;
-    // console.log(item);
-    
-   })
-   // ol.appendChild(li);
-    
-}
 
 /*......display 6 data.....*/
 const loadAiData =async ()=>{
@@ -85,7 +71,7 @@ const loadAiData =async ()=>{
     const res = await fetch(URL);
     const data= await res.json();
     aiData=data.data.tools;
-    console.log(aiData);
+  //  console.log(aiData);
     document.getElementById('loader').classList.remove('d-none');
     displayData(aiData,6);
 }
@@ -103,17 +89,34 @@ const displayData = (data,dataLimit)=>{
 //    let sliceData=data.slice(0,6);
    sliceData.forEach(element => {
         const { id, name, description, image,features,published_in } = element;
-         console.log(published_in);
+       //  console.log(published_in);
+         console.log(features)
+
         let div= document.createElement('div');
         div.classList.add('col');
+        let l='';
+        const items=features.map(p=>{
+           console.log(p);
+            l+= '<li>'+p+'</li>';
+           console.log(l);
+          console.log('masum');
+    
+        }
+            
+            
+            );
+            
         
-        div.innerHTML+=`<div class="card h-100">
-        <img src="${image}" class="card-img-top img-fluid h-100 rounded-start" alt="...">
+        div.innerHTML+=`<div class="card">
+        <img src="${image}" class="card-img-top img-fluid h-100  rounded-start" alt="...">
         <div class="card-body">
           <h5 class="card-title">Features</h5>
-          <ol id="list-container">
+          <ol id="list-container">`
 
-            ${listDisplay(sliceData[0].features)}
+          div.innerHTML+=l;
+            
+
+          div.innerHTML+=`
           </ol>
         </div>
         <hr class="w-100 text-center">
