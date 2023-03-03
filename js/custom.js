@@ -1,3 +1,4 @@
+let b=[];
 const displayAiDetails = data=>{
     const { id,description,features,image_link,integrations,input_output_examples,pricing,accuracy } = data;
     //console.log(data);
@@ -89,26 +90,47 @@ const displayData = (data,dataLimit)=>{
 //    let sliceData=data.slice(0,6);
    sliceData.forEach(element => {
         const { id, name, description, image,features,published_in } = element;
-       //  console.log(published_in);
-         console.log(features)
+        console.log(published_in);
+/*.......................sort start........................*/
 
+
+function dateSort(text,idNumber){
+  const myArray = text.split("/");
+  let newDate=myArray[2]+'-0'+myArray[1]+'-'+myArray[0];
+  const a1={};
+  a1.id=idNumber;
+  a1.date=newDate;
+  b.push(a1);
+}
+
+dateSort(published_in,id);
+
+const my = b.map(obj => {
+    return {...obj, date: new Date(obj.date)};
+  });
+ // console.log(my);
+ const sortedDesc = my.sort(
+(objA, objB) => Number(objB.date) - Number(objA.date),
+  );
+//console.log(sortedDesc);
+         
+/*.......................sort end........................*/
         let div= document.createElement('div');
         div.classList.add('col');
         let l='';
         const items=features.map(p=>{
-           console.log(p);
+          // console.log(p);
             l+= '<li>'+p+'</li>';
-           console.log(l);
-          console.log('masum');
+          // console.log(l);
+         // console.log('masum');
     
         }
-            
             
             );
             
         
-        div.innerHTML+=`<div class="card">
-        <img src="${image}" class="card-img-top img-fluid h-100  rounded-start" alt="...">
+        div.innerHTML+=`<div class="card h-50">
+        <img src="${image}" class="card-img-top img-fluid h-100 rounded-start" alt="...">
         <div class="card-body">
           <h5 class="card-title">Features</h5>
           <ol id="list-container">`
@@ -136,6 +158,7 @@ const displayData = (data,dataLimit)=>{
         `
         cardContainer.appendChild(div);
         
+        
     });
  document.getElementById('loader').classList.add('d-none');
      
@@ -146,3 +169,4 @@ document.getElementById('show-all').addEventListener('click',function(){
     displayData(aiData,7);
 })   
 loadAiData();
+console.log(b);
