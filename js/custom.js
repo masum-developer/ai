@@ -31,7 +31,6 @@ const displayAiDetails = data=>{
                         <li>${features[1].feature_name}</li>
                         <li>${features[2].feature_name}</li>
                         <li>${features[3].feature_name}</li>
-                        
                     </ul>
                 </div>
                 <div>
@@ -43,19 +42,18 @@ const displayAiDetails = data=>{
                     </ul>
                 </div>
             </div>
-            
         </div>
         <div class="w-100 p-4">
             <div>
             <img class="img-fluid rounded-3 position-relative" src="${image_link[0]}" id="image-id" alt="">
-            <span class="badge text-bg-danger position-absolute top-0 end-0 mt-5 me-5">${accuracy.score?accuracy.score*100:''}% accuracy</span>
+            <span class="badge text-bg-danger position-absolute top-0 end-0 mt-5 me-5">${accuracy.score?accuracy.score*100+'% accuracy':''}</span>
             </div>
             <h5 class="text-center">${input_output_examples[0].input}</h5>
-            <p class="text-center">${input_output_examples[0].output}</p>
+            <p class="text-center">${input_output_examples[0].output?input_output_examples[0].output:''}</p>
         </div>
-    
     `
 }
+let aiData;
 
 /*........................................*/
 const loadAiDetails = async id =>{
@@ -63,32 +61,59 @@ const loadAiDetails = async id =>{
     const res = await fetch(URL);
     const data= await res.json();
     displayAiDetails(data.data);
+}
+
+const listDisplay = data =>{
+    
+    const ol= document.getElementById('list-container');
+    //console.log(data);
+   data.forEach(item=>{
+
+    // ol.innerHTML=`<li></li>`;
+    //  const li =document.createElement('li');
+    //  li.innerText=`${item?item:''}`;
+    // console.log(item);
+    
+   })
+   // ol.appendChild(li);
     
 }
 
-
-
-
-
 /*......display 6 data.....*/
-const URL ="https://openapi.programming-hero.com/api/ai/tools";
-fetch(URL)
-.then(res=>res.json())
-.then(data=>displayData(data.data.tools));
+const loadAiData =async ()=>{
+    const URL ="https://openapi.programming-hero.com/api/ai/tools";
+    const res = await fetch(URL);
+    const data= await res.json();
+    aiData=data.data.tools;
+    console.log(aiData);
+    document.getElementById('loader').classList.remove('d-none');
+    displayData(aiData,6);
+}
 
-const displayData = data=>{
+
+const displayData = (data,dataLimit)=>{
    const cardContainer = document.getElementById('card-conatiner');
-    data.slice(0,6).forEach(element => {
+   cardContainer.textContent='';
+   let sliceData=data;
+   if(dataLimit===6){
+        
+    sliceData = sliceData.slice(0,6);
+   // showAll.classList.remove('d-none');
+}
+//    let sliceData=data.slice(0,6);
+   sliceData.forEach(element => {
         const { id, name, description, image,features,published_in } = element;
-        // console.log(element);
-        const div= document.createElement('div');
+         console.log(published_in);
+        let div= document.createElement('div');
         div.classList.add('col');
-        div.innerHTML=`<div class="card h-100">
+        
+        div.innerHTML+=`<div class="card h-100">
         <img src="${image}" class="card-img-top img-fluid h-100 rounded-start" alt="...">
         <div class="card-body">
           <h5 class="card-title">Features</h5>
           <ol id="list-container">
-            
+
+            ${listDisplay(sliceData[0].features)}
           </ol>
         </div>
         <hr class="w-100 text-center">
@@ -107,24 +132,14 @@ const displayData = data=>{
       </div>
         `
         cardContainer.appendChild(div);
-        let listContainer=document.getElementById('list-container');
-        features.forEach(feature=>{
-            // const li= document.createElement('li');
-            // li.innerHTML=`${feature?feature:'mm'}`;
-            // listContainer.appendChild(li);
-            // console.log(feature)
-            listContainer+=`<li>${feature}</li>`;
-        })
         
     });
-    
-    // console.log(data[0]);
-    //     data.features.forEach(feature=>{
-    //         console.log(feature);
-    //         
-    //         li.innerHTML='nn';
-    //         listContainer.appendChild(li);
-    //     })
-        
-        
+ document.getElementById('loader').classList.add('d-none');
+     
 }
+document.getElementById('show-all').addEventListener('click',function(){
+    document.getElementById('btn-section').classList.add('d-none');
+    document.getElementById('loader').classList.remove('d-none');
+    displayData(aiData,7);
+})   
+loadAiData();
