@@ -3,19 +3,24 @@ const showData= (id, name, image,features,published_in,div )=>{
     div.classList.add('col');
 let l='';
 const items=features.map(p=>{
-    l+= '<li>'+p+'</li>';
+    l+= '<li class="list-group-item">'+p+'</li>';
+    
 });
 div.innerHTML+=`<div class="card h-50">
-<img src="${image}" class="card-img-top img-fluid h-100 rounded-start" alt="...">
-<div class="card-body">
-  <h5 class="card-title">Features</h5>
-  <ol id="list-container">`
+<img src="${image}" class="card-img-top img-fluid h-75 rounded-start" alt="...">
+<div>
+ <div style="height:100px;">
+  <h5>Features</h5>
+  <ol id="list-container" class="list-group list-group-numbered">`
   div.innerHTML+=l;
   div.innerHTML+=`
   </ol>
+  
+  </div>
+  <hr style="width:97%;" style="margin:0 auto;">
 </div>
-<hr class="w-100 text-center">
-<div class="d-flex justify-content-between">
+
+<div class="d-flex justify-content-between align-items-center p-5">
 <div>
 <h2 class="m-3">${name}</h2>
 <small class="text-muted"><i class="fa-regular fa-calendar-days m-3"></i>${published_in}</small>
@@ -31,6 +36,7 @@ div.innerHTML+=`<div class="card h-50">
 /*  Display Ai details* */
 const displayAiDetails = data=>{
     const { id,description,features,image_link,integrations,input_output_examples,pricing,accuracy } = data;
+    //console.log(integrations);
     //console.log(data);
     // document.getElementById('description-id').innerText=data.data.description;
     document.getElementById('modal-container').innerHTML=`
@@ -39,17 +45,17 @@ const displayAiDetails = data=>{
                 <p id="description-id">${description}</p>
             </div>
             <div class="d-flex justify-content-between g-4 mt-3">
-                <div class="card p-2">
+                <div class="card p-2" style"width:70px;">
                     <div>
-                      <p">${pricing[0].price+' '+ pricing[0].plan}</p>
+                      <p">${pricing[0].price==0?'Free of cost':pricing[0].price}   ${pricing[0].plan}</p>
                     </div>
                 </div>
-                <div class="card p-2">
+                <div class="card p-2" style"width:43px;">
                     <div>
                     <p">${pricing[1].price+' '+ pricing[1].plan}</p>
                     </div>
                 </div>
-                <div class="card p-2">
+                <div class="card p-2" style"width:43px;">
                     <div>
                     <p">${pricing[2].price+' '+ pricing[2].plan}</p>
                     </div>
@@ -67,7 +73,7 @@ const displayAiDetails = data=>{
                 <div>
                     <h3>Integrations</h3>
                     <ul>
-                        <li>${integrations[0]}</li>
+                        <li>${integrations[0]?integrations[0]:'No data found'}</li>
                         <li>${integrations[1]}</li>
                         <li>${integrations[2]}</li>
                     </ul>
