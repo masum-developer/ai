@@ -5,13 +5,15 @@ const showData= (id, name, image,features,published_in,div )=>{
     div.classList.add('col');
 let l='';
 const items=features.map(p=>{
-    l+= '<li class="list-group-item">'+p+'</li>';
+  l+= '<li class="list-group-item">'+p+'</li>';
     
 });
-div.innerHTML+=`<div class="card h-50">
+
+
+div.innerHTML+=`<div class="card">
 
 <div>
-<img src="${image}" class="img-fluid h-75" alt="Ai Image">
+<img src="${image}" class="img-fluid h-100" alt="Ai Image">
  
   <p>Features</p>
   <ol id="list-container" class="list-group list-group-numbered">`
