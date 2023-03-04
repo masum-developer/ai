@@ -1,6 +1,6 @@
 let b=[];
 
-/*Show sort data*/
+/*Show data*/
 const showData= (id, name, image,features,published_in,div )=>{
     div.classList.add('col');
 let l='';
@@ -11,29 +11,29 @@ const items=features.map(p=>{
 div.innerHTML+=`<div class="card h-50">
 
 <div>
-<img src="${image}" class="img-fluid h-75" alt="...">
- <div style="height:100px;">
+<img src="${image}" class="img-fluid h-75" alt="Ai Image">
+ 
   <p>Features</p>
-  <ol id="list-container" class="p-2 ms-2">`
+  <ol id="list-container" class="list-group list-group-numbered">`
   div.innerHTML+=l;
   div.innerHTML+=`
   </ol>
-  
-  </div>
   <hr style="width:97%;" style="margin:0 auto;">
+
+  
 </div>
 
 <div class="d-flex justify-content-between align-items-center p-5">
 <div>
-<h2 class="m-3">${name}</h2>
+<h4>${name}</h4>
 <small class="text-muted"><i class="fa-regular fa-calendar-days m-3"></i>${published_in}</small>
 </div>
-<div style="margin-left:100px;">
-<a class="text-danger me-4 mt-5" data-bs-toggle="modal" data-bs-target="#aiModal" onclick="loadAiDetails('${id}')"><i style="font-size:30px;" class="fa-solid fa-circle-arrow-right"></i></a>
+<div>
+<a class="text-danger" data-bs-toggle="modal" data-bs-target="#aiModal" onclick="loadAiDetails('${id}')"><i style="font-size:30px;" class="fa-solid fa-circle-arrow-right"></i></a>
 </div>
 </div>
 </div>
-</div>
+
 `
 }
 
