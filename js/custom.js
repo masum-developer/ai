@@ -43,7 +43,7 @@ div.innerHTML+=`<div class="card">
 const displayAiDetails = data=>{
     console.log(data);
     const { id,description,features,image_link,integrations,input_output_examples,pricing,accuracy } = data;
-    //console.log(pricing);
+    
     
     document.getElementById('modal-container').textContent='';
     document.getElementById('modal-container').innerHTML+=`
@@ -129,9 +129,9 @@ const displayData = (data,dataLimit)=>{
    if(dataLimit===6){
         
     sliceData = sliceData.slice(0,6);
-   // showAll.classList.remove('d-none');
+   
 }
-//    let sliceData=data.slice(0,6);
+
    sliceData.forEach(element => {
         const { id, name, image,features,published_in } = element;
 /*.......................date format start........................*/
@@ -167,14 +167,14 @@ document.getElementById('show-all').addEventListener('click',function(){
 
 /*.......................Call Load Ai Data........................*/
 loadAiData();
-console.log(b);
+
 
 /*..............Sort By Date.................*/
 document.getElementById('sort-date-id').addEventListener('click',function(){
     const my = b.map(obj => {
         return {...obj, date: new Date(obj.date)};
       });
-     // console.log(my);
+     
      const sortedDesc = my.sort(
     (objA, objB) => Number(objB.date) - Number(objA.date),
       );
