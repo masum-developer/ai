@@ -49,7 +49,7 @@ const displayAiDetails = data=>{
             <div>
                 <p id="description-id">${description}</p>
             </div>
-            <div class="d-flex justify-content-between g-4 mt-3">
+            <div class="d-flex  justify-content-between g-4 mt-3">
                 <div class="card p-2" style"width:70px;">
                     <div>
                       <p">${(pricing===null)||(pricing[0].price==='0') ?'Free of cost':pricing[0].price}   ${pricing===null?'Free of cost':pricing[0].plan}</p>
@@ -72,9 +72,9 @@ const displayAiDetails = data=>{
                 <div>
                     <h3>Features</h3>
                     
-                        <p>${features[1].feature_name}</p>
-                        <p>${features[2].feature_name}</p>
-                        <p>${features[3].feature_name}</p>
+                        <p>${features[1]?features[1].feature_name:''}</p>
+                        <p>${features[2]?features[2].feature_name:''}</p>
+                        <p>${features[3]?features[3].feature_name:''}</p>
                         <p>${features[4]?features[4].feature_name:''}</p>
                     
                 </div>
